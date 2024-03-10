@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class DeathCtrl : MonoBehaviour
 {
-    [SerializeField] private GameObject gameObject;
-    private CanvasGroup canvas;
+    //[SerializeField] private GameObject background;
+    [SerializeField] private CanvasGroup canvas;
 
-    private void Start()
-    {
-        CanvasGroup canvas = gameObject.GetComponent<CanvasGroup>();
-    }
+    //private void Start()
+    //{
+    //    CanvasGroup canvas = background.GetComponent<CanvasGroup>();
+    //}
 
     public void FadeToBlack()
     {

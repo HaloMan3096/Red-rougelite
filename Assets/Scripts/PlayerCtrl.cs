@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
-    //Temp spot till i can find a better one 
-    public float health = 90;
-
     [SerializeField] private float moveSpeed = 5f;
 
     private Vector2 movement;

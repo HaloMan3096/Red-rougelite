@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class PlayerStatCtrl : MonoBehaviour
 {
-    [SerializeField] private PlayerCtrl player;
-    [SerializeField] private DeathCtrl death;
+    private PlayerCtrl player;
+    private DeathCtrl death;
+    //Temp spot till i can find a better one 
+    [SerializeField] public float PlayerHealth = 80;
+    private float PlayerMaxHealth = 80;
+
+    private void Awake()
+    {
+        player = this.GetComponent<PlayerCtrl>();
+        death = this.GetComponent<DeathCtrl>();
+    }
 
     [SerializeField] private GameObject health;
     [SerializeField] private GameObject stamina;
@@ -14,13 +23,13 @@ public class PlayerStatCtrl : MonoBehaviour
     public void ChangeHealth(float amount)
     {
         health.transform.right += new Vector3(0, 0, amount);
-        if(player.health <= 90)
+        if(PlayerHealth <= PlayerMaxHealth)
         {
-            player.health += amount;
-            player.health = Mathf.Ceil(player.health);
-            player.health = Mathf.Clamp(player.health, 0, 90);
+            PlayerHealth += amount * 20;
+            PlayerHealth = Mathf.Ceil(PlayerHealth);
+            PlayerHealth = Mathf.Clamp(PlayerHealth, 0, PlayerMaxHealth);
         }
-        if(player.health <= 0)
+        if(PlayerHealth <= 0)
         {
             death.FadeToBlack();
         }

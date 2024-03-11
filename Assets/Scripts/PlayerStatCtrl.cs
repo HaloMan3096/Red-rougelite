@@ -25,7 +25,7 @@ public class PlayerStatCtrl : MonoBehaviour
         health.transform.right += new Vector3(0, 0, amount);
         if(PlayerHealth <= PlayerMaxHealth)
         {
-            PlayerHealth += amount * 20;
+            PlayerHealth += amount * 15;
             PlayerHealth = Mathf.Ceil(PlayerHealth);
             PlayerHealth = Mathf.Clamp(PlayerHealth, 0, PlayerMaxHealth);
         }

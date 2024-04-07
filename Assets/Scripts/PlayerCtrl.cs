@@ -14,6 +14,7 @@ public class PlayerCtrl : MonoBehaviour
     private const string vertical = "Vertical";
     private const string lastHorizontal = "LastHorizontal";
     private const string lastVertical = "LastVertical";
+    private const string attack = "Attack";
 
     private void Awake()
     {
@@ -35,5 +36,12 @@ public class PlayerCtrl : MonoBehaviour
             animator.SetFloat(lastHorizontal, movement.x);
             animator.SetFloat(lastVertical, movement.y);
         }
+
+        
+    }
+
+    public void Attack()
+    {
+        animator.SetTrigger(attack);
     }
 }

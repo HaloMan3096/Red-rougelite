@@ -36,8 +36,6 @@ public class PlayerCtrl : MonoBehaviour
             animator.SetFloat(lastHorizontal, movement.x);
             animator.SetFloat(lastVertical, movement.y);
         }
-
-        
     }
 
     public void Attack()

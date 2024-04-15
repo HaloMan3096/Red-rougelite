@@ -55,27 +55,33 @@ public class PlayerCtrl : MonoBehaviour
         float dirrection = 0;
         if (Mathf.Abs(InputManager.Movement.x) > Mathf.Abs(InputManager.Movement.y))
         {
+            // Check if x is negitive
             if (InputManager.Movement.x < 0)
-            {
-                dirrection = -90;
-            }
-            dirrection = 90;
-        }
-        if (Mathf.Abs(InputManager.Movement.x) < Mathf.Abs(InputManager.Movement.y))
-        {
-            if (InputManager.Movement.y < 0)
             {
                 dirrection = 180;
             }
-            dirrection = 0;
+            else
+            {
+                dirrection = 0;
+            }
+        }
+        if (Mathf.Abs(InputManager.Movement.x) < Mathf.Abs(InputManager.Movement.y))
+        {
+            // Check if y is negitive
+            if (InputManager.Movement.y < 0)
+            {
+                dirrection = -90;
+            }
+            else
+            {
+                dirrection = 90;
+            }
         }
 
-        Debug.Log($"X:{InputManager.Movement.x}, Y:{InputManager.Movement.y}; " +
-            $"Animator X:{animator.GetFloat("Horizontal")}, Y:{animator.GetFloat("Vertical")} " +
-            $"LastAnimator X:{animator.GetFloat("LastHorizontal")}, Y:{animator.GetFloat("LastVertical")}");
-
-        var rot = gameObject.transform.localRotation.eulerAngles;
-        rot.Set(0f, 0f, dirrection);
-        attackArea.transform.Rotate(rot);
+        // detect if we are moving the player
+        if (Mathf.Abs(InputManager.Movement.x) >= 1 || Mathf.Abs(InputManager.Movement.y) >= 1)
+        {
+            attackArea.transform.rotation = Quaternion.Euler(0, 0, dirrection);
+        }
     }
 }

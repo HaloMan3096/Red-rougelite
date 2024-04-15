@@ -11,10 +11,13 @@ public class PlayerAttack : MonoBehaviour
     private float timeToAttack = 0.25f;
     private float timer = 0f;
 
+    private Animator animator;
+
     // get the attack area game object at run time
     private void Start()
     {
         attackArea = transform.GetChild(0).gameObject;
+        animator = GetComponent<Animator>();
     }
 
     // Check for the input for attack
@@ -35,6 +38,7 @@ public class PlayerAttack : MonoBehaviour
                 timer = 0f;
                 isAttacking = false;
                 attackArea.SetActive(isAttacking);
+                animator.ResetTrigger("Attack");
             }
         }
     }
@@ -44,5 +48,6 @@ public class PlayerAttack : MonoBehaviour
     {
         isAttacking = true;
         attackArea.SetActive(isAttacking);
+        animator.SetTrigger("Attack");
     }
 }

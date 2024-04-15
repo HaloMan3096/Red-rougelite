@@ -59,7 +59,10 @@ public class Player : MonoBehaviour
             {
                 return new Vector2(-1, 0);
             }
-            return new Vector2(1, 0);
+            else
+            {
+                return new Vector2(1, 0);
+            }
         }
         if (Mathf.Abs(lastHorizontal) < Mathf.Abs(lastVertical))
         {
@@ -67,7 +70,10 @@ public class Player : MonoBehaviour
             {
                 return new Vector2(0, -1);
             }
-            return new Vector2(0, 1);
+            else
+            {
+                return new Vector2(0, 1);
+            }
         }
 
         return result;

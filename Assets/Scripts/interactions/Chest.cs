@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    // play chest opening animation
+    // change the chest to the open state sprite
 
     // Interacting logic
     public Interact OpenFromInteraction;
@@ -14,6 +14,7 @@ public class Chest : MonoBehaviour
         OpenFromInteraction = this.GetComponent<Interact>();
     }
 
+    // when the object is created we subscribe the OBJ to the hasInteracted event
     private void OnEnable()
     {
         if (OpenFromInteraction)
@@ -30,6 +31,7 @@ public class Chest : MonoBehaviour
         }
     }
 
+    // Logic for what happens when you open the chest
     public void OpenChest()
     {
         Debug.Log("Opening Chest");

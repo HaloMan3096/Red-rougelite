@@ -12,6 +12,7 @@ public class ItemPickup : MonoBehaviour
         item = AssignItem(itemDrop);
     }
 
+    // When the player enters the 2d collider add it to the player 'inventory' and destroy this
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -22,9 +23,12 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adding the item that is selected 
+    /// </summary>
+    /// <param name="player"></param>
     public void AddItem(Player player)
     {
-        Debug.Log("We addin here");
         foreach (ItemList i in player.items)
         {
             if (i.name == item.GiveName())
@@ -36,6 +40,11 @@ public class ItemPickup : MonoBehaviour
         player.items.Add(new ItemList(item, item.GiveName(), 1));
     }
 
+    /// <summary>
+    /// create a item based on what item is chosen from the enum
+    /// </summary>
+    /// <param name="itemToAssign"></param>
+    /// <returns></returns>
     public Item AssignItem(Items itemToAssign)
     {
         switch (itemToAssign)
@@ -48,6 +57,7 @@ public class ItemPickup : MonoBehaviour
     }
 }
 
+// The list of items
 public enum Items
 {
     HealingItem,

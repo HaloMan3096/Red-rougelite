@@ -1,30 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] public int Health;
-    public int Stamina { get { return Stamina; } set {  Stamina = maxStamina; }}
-    public int Mana    { get { return Mana; }    set {  Mana = maxMana; }}
+    public List<ItemList> items = new List<ItemList>();
+    public Health health;
 
-    private int maxHealth  = 100;
-    private int maxStamina = 150;
-    private int maxMana    = 50;
-
-    [SerializeField] public List<ItemList> items = new List<ItemList>();
-
+    // Get the health script and start the item CoRoutine
     private void Start()
     {
+        health = GetComponent<Health>();
         StartCoroutine(CallItemUpdate());
     }
 
+    // Checks for inputs
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E)) PlayerInteract();
     }
 
+    // Just for debuging
     public void testing()
     {
         Debug.Log("Got Player Script");
@@ -41,35 +39,50 @@ public class Player : MonoBehaviour
         StartCoroutine(CallItemUpdate());
     }
 
-    // get private values
-    public int GetMaxHealth() { return maxHealth; }
-    public int GetMaxMana() {  return maxMana; }
-    public int GetMaxStamina() { return maxStamina; }
+    /// <summary>
+    /// Returns a V2 in the direction that the player is facing
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetDirection()
+    {
+        Vector2 result = Vector2.zero;
+
+        // Get the last dirrection
+        Animator animator = this.GetComponent<Animator>();
+        float lastHorizontal = animator.GetFloat("LastHorizontal");
+        float lastVertical = animator.GetFloat("LastVertical");
+
+        // we compair the values using absolute value and then check if its negitive
+        if (Mathf.Abs(lastHorizontal) > Mathf.Abs(lastVertical))
+        {
+            if(lastHorizontal < 0)
+            {
+                return new Vector2(-1, 0);
+            }
+            return new Vector2(1, 0);
+        }
+        if (Mathf.Abs(lastHorizontal) < Mathf.Abs(lastVertical))
+        {
+            if(lastVertical < 0)
+            {
+                return new Vector2(0, -1);
+            }
+            return new Vector2(0, 1);
+        }
+
+        return result;
+    }
 
     // Interacting
-
     public void PlayerInteract()
     {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(this.gameObject.transform.position, new Vector2(0,1), 1f);
-        Debug.DrawRay(this.gameObject.transform.position, new Vector3(0,1,0), Color.red);
+        // get the direction the player is facing and do a raycast in that direction
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(this.gameObject.transform.position, GetDirection(), 1f);
 
-        if (raycastHit2D.transform == null)
-        {
-            Debug.Log("Dosent exist");
-        }
+        // null check to avoid null ref. error
+        if (raycastHit2D.transform == null) { return; }
 
-        Interact interact = null;
-        if (raycastHit2D.transform.TryGetComponent<Interact>(out Interact _interact))
-        {
-            Debug.Log("Hit Sumthin");
-            interact = _interact;
-        }
-
-        interact = raycastHit2D.transform.GetComponent<Interact>();
-        if (interact)
-        {
-            Debug.Log("Interactin Here");
-            interact.CallInteract(this);
-        }
+        Interact interact = raycastHit2D.transform.GetComponent<Interact>();
+        if (interact) { interact.CallInteract(this); }
     }
 }

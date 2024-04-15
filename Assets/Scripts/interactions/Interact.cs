@@ -7,6 +7,7 @@ public class Interact : MonoBehaviour
     InteractEvent interact = new InteractEvent();
     Player player;
 
+    // create an interact if there is none 
     public InteractEvent GetInteractEvent
     {
         get
@@ -24,6 +25,10 @@ public class Interact : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// calls the interact event on the InteractEvent
+    /// </summary>
+    /// <param name="interactedPlayer"></param>
     public void CallInteract(Player interactedPlayer)
     {
         player = interactedPlayer;

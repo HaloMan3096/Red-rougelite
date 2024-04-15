@@ -3,11 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
+/// <summary>
+/// Used to remove an unspecified amount of tiles allowing the player to move
+/// </summary>
 public class Lever : MonoBehaviour
 {
     // Get tile/tilemap reference
     [SerializeField] Tilemap doorTileMap;
+    [SerializeField] Vector3Int[] tilePositions;
+
     // Interacting logic
     public Interact OpenFromInteraction;
 
@@ -16,6 +22,7 @@ public class Lever : MonoBehaviour
         OpenFromInteraction = this.GetComponent<Interact>();
     }
 
+    // when the object is created we subscribe the OBJ to the hasInteracted event
     private void OnEnable()
     {
         if (OpenFromInteraction)
@@ -32,9 +39,13 @@ public class Lever : MonoBehaviour
         }
     }
 
-    // remove the specific tile
+    // remove the specific tile(s)
     public void removeTile()
     {
-        Debug.Log("Lever Flipped");
+        // we dont know how many tiles a given lever will disable so we use a foreach loop
+        foreach(Vector3Int i in tilePositions)
+        {
+            doorTileMap.SetTile(i, null);
+        }
     }
 }

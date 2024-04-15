@@ -25,10 +25,7 @@ public class HealingItem : Item
 
     public override void update(Player player, int stacks, ItemList item)
     {
-        if (player.Health >= player.GetMaxHealth())
-            return;
-
-        player.Health += 3 + (2 * stacks);
+        player.health.Heal(3 + (2 * stacks));
     }
 }
 

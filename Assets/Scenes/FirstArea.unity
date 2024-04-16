@@ -387,6 +387,14 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6757425275503057738, guid: e9228aa471c5f78449ba051ec4add6dd, type: 3}
+      propertyPath: timeToDash
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757425275503057739, guid: e9228aa471c5f78449ba051ec4add6dd, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6757425275503057740, guid: e9228aa471c5f78449ba051ec4add6dd, type: 3}
       propertyPath: m_RootOrder
       value: 4

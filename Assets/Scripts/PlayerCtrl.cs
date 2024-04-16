@@ -7,6 +7,7 @@ public class PlayerCtrl : MonoBehaviour
     /// <summary>
     /// Changes the Animator and moves the player
     /// </summary>
+  
     [SerializeField] private float moveSpeed = 5f;
 
     private Vector2 movement;
@@ -14,12 +15,17 @@ public class PlayerCtrl : MonoBehaviour
     private Animator animator;
     private GameObject attackArea;
 
+    private bool isDashing = false;
+    private float timeToDash = 1f;
+    [SerializeField] private float timer = 0f;
+
     #region Constants
     // we make a few const strings for the animator editor
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
     private const string LAST_HORIZONTAL = "LastHorizontal";
     private const string LAST_VERTICAL = "LastVertical";
+    private const string DASH = "Dash";
     #endregion
 
     // on awake we get the rigidbody and animator
@@ -37,6 +43,18 @@ public class PlayerCtrl : MonoBehaviour
 
         rb.velocity = movement * moveSpeed;
 
+        if (isDashing)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timeToDash)
+            {
+                timer = 0f;
+                isDashing = false;
+                animator.ResetTrigger(DASH);
+            }
+        }
+
         // Then we change the animator
         animator.SetFloat(HORIZONTAL, movement.x);
         animator.SetFloat(VERTICAL, movement.y);
@@ -48,6 +66,7 @@ public class PlayerCtrl : MonoBehaviour
             animator.SetFloat(LAST_HORIZONTAL, movement.x);
             animator.SetFloat(LAST_VERTICAL, movement.y);
         }
+        animator.ResetTrigger(DASH);
     }
 
     private void rotateAttackArea()

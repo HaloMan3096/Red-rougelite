@@ -15,6 +15,7 @@ public class PlayerCtrl : MonoBehaviour
     private Animator animator;
     private GameObject attackArea;
     private bool isDashing = false;
+    private bool isAttacking = false;
 
     #region Constants
     // we make a few const strings for the animator editor
@@ -38,7 +39,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         movement.Set(InputManager.Movement.x, InputManager.Movement.y);
 
-        if (!isDashing)
+        if (!isDashing || !isAttacking)
             rb.velocity = movement * moveSpeed;
 
         AnimatorMovement();
@@ -102,5 +103,10 @@ public class PlayerCtrl : MonoBehaviour
     public void dash(bool dash)
     {
         isDashing = dash;
+    }
+
+    public void Attack(bool a)
+    {
+        isAttacking = a;
     }
 }

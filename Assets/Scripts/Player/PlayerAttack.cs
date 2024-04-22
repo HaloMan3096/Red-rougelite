@@ -13,9 +13,11 @@ public class PlayerAttack : MonoBehaviour
 
     private Animator animator;
 
+    private PlayerCtrl player;
     // get the attack area game object at run time
     private void Start()
     {
+        player = GetComponent<PlayerCtrl>();
         attackArea = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
     }
@@ -25,6 +27,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            player.Attack(true);
             Attack();
         }
 
@@ -37,6 +40,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 timer = 0f;
                 isAttacking = false;
+                player.Attack(false);
                 attackArea.SetActive(isAttacking);
                 animator.ResetTrigger("Attack");
             }

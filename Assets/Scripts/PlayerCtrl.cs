@@ -8,16 +8,13 @@ public class PlayerCtrl : MonoBehaviour
     /// Changes the Animator and moves the player
     /// </summary>
   
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] public float moveSpeed = 5f;
 
     private Vector2 movement;
     private Rigidbody2D rb;
     private Animator animator;
     private GameObject attackArea;
-
     private bool isDashing = false;
-    private float timeToDash = 1f;
-    [SerializeField] private float timer = 0f;
 
     #region Constants
     // we make a few const strings for the animator editor
@@ -41,20 +38,14 @@ public class PlayerCtrl : MonoBehaviour
     {
         movement.Set(InputManager.Movement.x, InputManager.Movement.y);
 
-        rb.velocity = movement * moveSpeed;
+        if (!isDashing)
+            rb.velocity = movement * moveSpeed;
 
-        if (isDashing)
-        {
-            timer += Time.deltaTime;
+        AnimatorMovement();
+    }
 
-            if (timer >= timeToDash)
-            {
-                timer = 0f;
-                isDashing = false;
-                animator.ResetTrigger(DASH);
-            }
-        }
-
+    private void AnimatorMovement()
+    {
         // Then we change the animator
         animator.SetFloat(HORIZONTAL, movement.x);
         animator.SetFloat(VERTICAL, movement.y);
@@ -66,7 +57,6 @@ public class PlayerCtrl : MonoBehaviour
             animator.SetFloat(LAST_HORIZONTAL, movement.x);
             animator.SetFloat(LAST_VERTICAL, movement.y);
         }
-        animator.ResetTrigger(DASH);
     }
 
     private void rotateAttackArea()
@@ -102,5 +92,15 @@ public class PlayerCtrl : MonoBehaviour
         {
             attackArea.transform.rotation = Quaternion.Euler(0, 0, dirrection);
         }
+    }
+
+    public void changeSpeed(float speed)
+    {
+        moveSpeed = speed;
+    }
+
+    public void dash(bool dash)
+    {
+        isDashing = dash;
     }
 }

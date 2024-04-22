@@ -17,9 +17,12 @@ public class Lever : MonoBehaviour
     // Interacting logic
     public Interact OpenFromInteraction;
 
+    SpriteRenderer spriteRenderer;
+
     private void Awake()
     {
         OpenFromInteraction = this.GetComponent<Interact>();
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
     // when the object is created we subscribe the OBJ to the hasInteracted event
@@ -42,10 +45,17 @@ public class Lever : MonoBehaviour
     // remove the specific tile(s)
     public void removeTile()
     {
+        ShowChange();
         // we dont know how many tiles a given lever will disable so we use a foreach loop
-        foreach(Vector3Int i in tilePositions)
+        foreach (Vector3Int i in tilePositions)
         {
             doorTileMap.SetTile(i, null);
         }
+    }
+
+    // Just for the test enviroment we want to show that the lever has been interacted with
+    private void ShowChange()
+    {
+        spriteRenderer.color = Color.black;
     }
 }

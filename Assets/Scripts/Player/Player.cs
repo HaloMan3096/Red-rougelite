@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     public List<ItemList> items = new List<ItemList>();
     public Health health;
+    public int numOfGems;
 
     // Get the health script and start the item CoRoutine
     private void Start()

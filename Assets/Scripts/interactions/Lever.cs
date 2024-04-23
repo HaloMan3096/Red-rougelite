@@ -49,6 +49,7 @@ public class Lever : MonoBehaviour
         // we dont know how many tiles a given lever will disable so we use a foreach loop
         foreach (Vector3Int i in tilePositions)
         {
+            Debug.Log("Thats one down");
             doorTileMap.SetTile(i, null);
         }
     }

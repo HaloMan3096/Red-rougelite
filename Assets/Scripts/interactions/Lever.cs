@@ -7,6 +7,7 @@ using UnityEngine.WSA;
 
 /// <summary>
 /// Used to remove an unspecified amount of tiles allowing the player to move
+/// The designer should add a copy of the open door underneth if there is one
 /// </summary>
 public class Lever : MonoBehaviour
 {
@@ -49,7 +50,6 @@ public class Lever : MonoBehaviour
         // we dont know how many tiles a given lever will disable so we use a foreach loop
         foreach (Vector3Int i in tilePositions)
         {
-            Debug.Log("Thats one down");
             doorTileMap.SetTile(i, null);
         }
     }

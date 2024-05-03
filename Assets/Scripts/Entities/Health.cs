@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private int health = 100;
+
+    // Just for testing
+    [SerializeField] private TextMeshProUGUI textBox;
+    private float textTimer = 1.5f;
+    private float timer = 0;
+    public bool gotHit;
     
     // Semi-Constant because we might want to change health values
     private int MAX_HEALTH = 100;
@@ -12,7 +19,34 @@ public class Health : MonoBehaviour
     
     void Update()
     {
+        if (health <= 0)
+        {
+            Die();
+        }
 
+        if (gotHit)
+        {
+            timer += Time.deltaTime;
+        }
+
+        if (timer !>= textTimer && textBox != null)
+        {
+            Debug.Log("Turning off the text box");
+            timer = 0;
+            gotHit = false;
+            textBox.gameObject.SetActive(false);
+        }
+    }
+
+    public int GetHealthAmount()
+    {
+        return health;
+    }
+
+    public void SetHealth(int maxHealth, int health)
+    {
+        this.MAX_HEALTH = maxHealth;
+        this.health = health;
     }
 
     /// <summary>
@@ -32,6 +66,17 @@ public class Health : MonoBehaviour
             Die();
         }
 
+        Debug.Log($"Entity: {this} Got hit for {amount} DMG");
+
+        if(textBox != null)
+        {
+            Debug.Log("Turning on the text box");
+            textBox.gameObject.SetActive(true);
+            timer = 0;
+            textBox.color = Color.red;
+            textBox.text = $"-{amount}";
+            gotHit = true;
+        }
 
         this.health -= amount;
     }

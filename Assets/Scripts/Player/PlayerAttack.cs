@@ -27,7 +27,6 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            player.Attack(true);
             Attack();
         }
 
@@ -36,13 +35,20 @@ public class PlayerAttack : MonoBehaviour
         {
             timer += Time.deltaTime;
 
+            if (Input.GetKey(KeyCode.V))
+            {
+                animator.SetTrigger("Attack_Again");
+                timer = 0;
+            }
+
             if (timer >= timeToAttack )
             {
                 timer = 0f;
                 isAttacking = false;
-                player.Attack(false);
                 attackArea.SetActive(isAttacking);
                 animator.ResetTrigger("Attack");
+                animator.ResetTrigger("Attack_Again");
+                player.Attack(false);
             }
         }
     }
@@ -50,6 +56,7 @@ public class PlayerAttack : MonoBehaviour
     // Change the bool isAttacking to true
     private void Attack()
     {
+        player.Attack(true);
         isAttacking = true;
         attackArea.SetActive(isAttacking);
         animator.SetTrigger("Attack");

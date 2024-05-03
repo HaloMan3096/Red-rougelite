@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,11 +8,12 @@ using UnityEngine.UI;
 public class FadeToBlack : MonoBehaviour
 {
     private Image image;
-    private State state = State.fadingIn;
+    private FadeState state = FadeState.fadingIn;
     private float betweenFade = 0.01f;
     private float timer = 0;
     private string scene;
     private bool isQuiting;
+
     void Start()
     {
         image = GetComponent<Image>();
@@ -22,15 +24,15 @@ public class FadeToBlack : MonoBehaviour
     {
         switch(state)
         {
-            case State.nothing: break;
+            case FadeState.nothing: break;
 
-            case State.fadingOut:
+            case FadeState.fadingOut:
                 timer += Time.deltaTime;
                 if (timer >= betweenFade)
                 {
                     if (image.color.a >= 1)
                     {
-                        state = State.nothing; 
+                        state = FadeState.nothing; 
                         if (!isQuiting)
                             SceneManager.LoadScene(scene); 
                         
@@ -41,12 +43,12 @@ public class FadeToBlack : MonoBehaviour
                 }
             break;
 
-            case State.fadingIn:
+            case FadeState.fadingIn:
                 timer += Time.deltaTime;
                 if (timer >= betweenFade)
                 {
                     if(image.color.a <= 0)
-                        state = State.nothing;
+                        state = FadeState.nothing;
 
                     timer = 0;
                     Fade(true);
@@ -59,13 +61,19 @@ public class FadeToBlack : MonoBehaviour
     public void StartFade(string sceneToTransitionTo)
     {
         scene = sceneToTransitionTo;
-        state = State.fadingOut;
+        state = FadeState.fadingOut;
+    }
+
+    public static void StartFade(string sceneToTransitionTo, FadeToBlack fade)
+    {
+        fade.scene = sceneToTransitionTo;
+        fade.state = FadeState.fadingOut;
     }
 
     public void FadeToQuit()
     {
         isQuiting = true;
-        state = State.fadingOut;
+        state = FadeState.fadingOut;
     }
 
     /// <summary>
@@ -85,7 +93,7 @@ public class FadeToBlack : MonoBehaviour
     }
 }
 
-public enum State
+public enum FadeState
 {
     nothing,
     fadingOut,

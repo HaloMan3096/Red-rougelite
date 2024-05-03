@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
     public List<ItemList> items = new List<ItemList>();
     public Health health;
     public int numOfGems;
+    [SerializeField] FadeToBlack fade;
 
     // Get the health script and start the item CoRoutine
     private void Start()
@@ -23,10 +25,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) PlayerInteract();
     }
 
-    // Just for debuging
-    public void testing()
+    private void OnDestroy()
     {
-        Debug.Log("Got Player Script");
+        if(health.GetHealthAmount() < 0)
+        {
+            FadeToBlack.StartFade("DeathScene", fade);
+        }
     }
 
     // activate the update function on the items

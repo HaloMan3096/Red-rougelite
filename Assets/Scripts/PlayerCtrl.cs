@@ -26,7 +26,7 @@ public class PlayerCtrl : MonoBehaviour
     private const string DASH = "Dash";
     #endregion
 
-    // on awake we get the rigidbody and animator
+    // on awake we get the rigidbody, animator, and attack area
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,7 +39,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         movement.Set(InputManager.Movement.x, InputManager.Movement.y);
 
-        if (!isDashing || !isAttacking)
+        if (!isDashing && !isAttacking)
             rb.velocity = movement * moveSpeed;
 
         AnimatorMovement();

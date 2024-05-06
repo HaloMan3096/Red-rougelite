@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(health.GetHealthAmount() < 0)
+        if(health.GetHealthAmount() <= 0)
         {
             FadeToBlack.StartFade("DeathScene", fade);
         }
